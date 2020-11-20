@@ -227,6 +227,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'date_format' => 'd/m/Y',
+        'date_format_javascript' => 'DD/MM/YYYY',
 
     ],
 

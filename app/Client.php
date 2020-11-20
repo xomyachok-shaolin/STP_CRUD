@@ -10,4 +10,8 @@ class Client extends Model
     protected $fillable = [
         'surname', 'name', 'lastname', 'mail', 'comment'
     ];
+
+    public function journal() {
+        return $this->hasMany('App\Journal');
+    }
 }

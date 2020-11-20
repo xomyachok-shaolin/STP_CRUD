@@ -23,7 +23,7 @@
                                           height: auto;
                                           background-size: cover;">
         <div id="navbar">
-            <a href="javascript:void(0)">Журнал регистрации гостей</a>
+            <a href="{{route('ajaxjournals.index')}}">Журнал регистрации гостей</a>
             <a href="{{route('ajaxrooms.index')}}">Номера</a>
             <a class="active" href="javascript:void(0)">Клиенты</a>
         </div>

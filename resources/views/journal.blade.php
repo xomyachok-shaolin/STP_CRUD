@@ -23,22 +23,23 @@
                                           height: auto;
                                           background-size: cover;">
         <div id="navbar">
-            <a href="{{route('ajaxjournals.index')}}">Журнал регистрации гостей</a>
-            <a class="active" href="javascript:void(0)">Номера</a>
+            <a class="active" href="javascript:void(0)">Журнал регистрации гостей</a>
+            <a href="{{route('ajaxrooms.index')}}">Номера</a>
             <a href="{{route('ajaxclients.index')}}">Клиенты</a>
         </div>
 
     </div>
 
-    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)" id="createNewRoom"> Create New Room</a>
+    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)" id="createNewRecord"> Create New Record</a>
 
     <table class="table table-bordered data-table">
         <thead>
         <tr>
-            <th>№</th>
-            <th>Capacity</th>
-            <th>Comfortable</th>
-            <th>Price</th>
+            <th>ID</th>
+            <th>Date income</th>
+            <th>Client</th>
+            <th>Room</th>
+            <th>Date export</th>
             <th width="180px">Action</th>
         </tr>
         </thead>
@@ -54,41 +55,45 @@
                 <h4 class="modal-title" id="modelHeading"></h4>
             </div>
             <div class="modal-body">
-                <form id="roomForm" name="roomForm" class="form-horizontal">
+                <form id="recordForm" name="recordForm" class="form-horizontal">
 
-                    <input type="hidden" name="room_id" id="room_id">
+                    <input type="hidden" name="record_id" id="record_id">
 
                     <div class="form-group">
-                        <label for="number" class="col-sm-4 control-label">№ Room</label>
+                        <label for="date_income" class="col-sm-4 control-label">Date income</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="number" name="number" placeholder="Enter № Room" value="" maxlength="50" required="">
+                            <input type="date" class="form-control" id="date_income" name="date_income" value="" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="capacity" class="col-sm-4 control-label">Capacity</label>
+                        <label for="client_id" class="col-sm-4 control-label">Client</label>
                         <div class="col-sm-12">
-                            <input type="number" value="1" min="1" max="16" class="form-control" id="capacity" name="capacity" placeholder="Enter capacity" value="" maxlength="50" required="">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="comfortable" class="col-sm-4 control-label">Comfortable</label>
-                        <div class="col-sm-12">
-                            <select class="browser-default custom-select" id="comfortable" name="comfortable" value="" maxlength="50" required="">
-                                <option selected>Enter comfortable</option>
-                                <option value="Обычный">Обычный</option>
-                                <option value="Полулюкс">Полулюкс</option>
-                                <option value="Люкс">Люкс</option>
+                            <select name="client_id" id="client_id" class="form-control" required>
+                                <option selected>Enter mail client</option>
+                                @foreach($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->mail }}</option>
+                                @endforeach
                             </select>
-
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="price" class="col-sm-4 control-label">Price</label>
+                        <label for="room_id" class="col-sm-4 control-label">Room</label>
                         <div class="col-sm-12">
-                            <input type="number" value="10" min="10" max="16000" class="form-control" id="price" name="price" placeholder="Enter price" value="" maxlength="50" required="">
+                            <select name="room_id" id="room_id" class="form-control" required>
+                                <option selected>Enter number room</option>
+                                @foreach($rooms as $room)
+                                    <option value="{{ $room->id }}">{{ $room->number }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date_export" class="col-sm-4 control-label">Date export</label>
+                        <div class="col-sm-12">
+                            <input type="date" class="form-control" id="date_export" name="date_export" placeholder="Enter date export" value="" maxlength="50">
                         </div>
                     </div>
 
@@ -96,6 +101,7 @@
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
                         </button>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -116,35 +122,41 @@
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('ajaxrooms.index') }}",
+            ajax: "{{ route('ajaxjournals.index') }}",
             columns: [
-                {data: 'number', name: 'number'},
-                {data: 'capacity'},
-                {data: 'comfortable'},
-                {data: 'price'},
-                {data: 'action', orderable: false, searchable: false},
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'date_income'},
+                {data: 'mail'},
+                {data: 'number'},
+                {data: 'date_export'},
+                {data: 'action', orderable: false, searchable: false}
             ]
         });
 
-        $('#createNewRoom').click(function () {
-            $('#saveBtn').val("create-room");
-            $('#room_id').val('');
-            $('#roomForm').trigger("reset");
-            $('#modelHeading').html("Create New Room");
+        console.log(table.columns.id);
+
+        $('#createNewRecord').click(function () {
+            $('#saveBtn').val("create-record");
+            $('#record_id').val('');
+            $('#recordForm').trigger("reset");
+            $('#modelHeading').html("Create New Record");
             $('#ajaxModel').modal('show');
         });
 
-        $('body').on('click', '.editRoom', function () {
-            var room_id = $(this).data('id');
-            $.get("{{ route('ajaxrooms.index') }}" +'/' + room_id +'/edit', function (data) {
-                $('#modelHeading').html("Edit Room");
-                $('#saveBtn').val("edit-room");
+        $('body').on('click', '.editRecord', function () {
+            var record_id = $(this).data('id');
+            console.log($(this));
+            console.log(record_id);
+            $.get("{{ route('ajaxjournals.index') }}" +'/' + record_id +'/edit', function (data) {
+                $('#modelHeading').html("Edit Record");
+                $('#saveBtn').val("edit-record");
                 $('#ajaxModel').modal('show');
-                $('#room_id').val(data.id);
-                $('#number').val(data.number);
-                $('#capacity').val(data.capacity);
-                $('#comfortable').val(data.comfortable);
-                $('#price').val(data.price);
+                $('#record_id').val(data.id);
+                $('#date_income').val(data.date_income);
+                $('#client_id').val(data.client_id);
+                $('#room_id').val(data.room_id);
+                $('#date_export').val(data.date_export);
+
             })
         });
 
@@ -153,13 +165,13 @@
             $(this).html('Sending..');
 
             $.ajax({
-                data: $('#roomForm').serialize(),
-                url: "{{ route('ajaxrooms.store') }}",
+                data: $('#recordForm').serialize(),
+                url: "{{ route('ajaxjournals.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
 
-                    $('#roomForm').trigger("reset");
+                    $('#recordForm').trigger("reset");
                     $('#ajaxModel').modal('hide');
                     table.draw();
 
@@ -171,15 +183,15 @@
             });
         });
 
-        $('body').on('click', '.deleteRoom', function () {
+        $('body').on('click', '.deleteRecord', function () {
 
-            var room_id = $(this).data("id");
+            var record_id = $(this).data("id");
             var result = confirm("Are You sure want to delete !");
 
             if (result) {
                 $.ajax({
                     type: "DELETE",
-                    url: "{{ route('ajaxrooms.store') }}" + '/' + room_id,
+                    url: "{{ route('ajaxjournals.store') }}" + '/' + record_id,
                     success: function (data) {
                         table.draw();
                     },

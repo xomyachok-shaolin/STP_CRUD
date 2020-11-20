@@ -16,8 +16,10 @@
 });*/
 
 
-Route::get('/', 'RoomController@index');
+Route::get('/', 'JournalController@index');
+Route::get('/rooms', 'RoomController@index');
 Route::get('/clients', 'ClientController@index');
 
 Route::resource('ajaxclients','ClientController');
 Route::resource('ajaxrooms','RoomController');
+Route::resource('ajaxjournals','JournalController');
