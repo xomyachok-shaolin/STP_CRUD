@@ -3,7 +3,7 @@
 <head>
     <title>HOTEL (LARAVEL - CRUD)</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -30,7 +30,8 @@
 
     </div>
 
-    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)" id="createNewRecord"> Create New Record</a>
+    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)"
+       id="createNewRecord"> Create New Record</a>
 
     <table class="table table-bordered data-table">
         <thead>
@@ -62,7 +63,8 @@
                     <div class="form-group">
                         <label for="date_income" class="col-sm-4 control-label">Date income</label>
                         <div class="col-sm-12">
-                            <input type="date" class="form-control" id="date_income" name="date_income" value="" required>
+                            <input type="date" class="form-control" id="date_income" name="date_income" value=""
+                                   required>
                         </div>
                     </div>
 
@@ -93,7 +95,8 @@
                     <div class="form-group">
                         <label for="date_export" class="col-sm-4 control-label">Date export</label>
                         <div class="col-sm-12">
-                            <input type="date" class="form-control" id="date_export" name="date_export" placeholder="Enter date export" value="" maxlength="50">
+                            <input type="date" class="form-control" id="date_export" name="date_export"
+                                   placeholder="Enter date export" value="" maxlength="50">
                         </div>
                     </div>
 
@@ -129,7 +132,17 @@
                 {data: 'mail'},
                 {data: 'number'},
                 {data: 'date_export'},
-                {data: 'action', orderable: false, searchable: false}
+                {
+                    data: 'action', orderable: false, searchable: false, className: 'text-right',
+                    "render": function (data, type, row) {
+
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' + row.id + '" data-original-title="Edit" class="edit btn btn-primary btn-sm editRecord">Edit</a>';
+
+                        $btn = $btn + ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' + row.id + '" data-original-title="Delete" class="btn btn-danger btn-sm deleteRecord">Delete</a>';
+
+                        return $btn;
+                    }
+                }
             ]
         });
 
@@ -147,7 +160,7 @@
             var record_id = $(this).data('id');
             console.log($(this));
             console.log(record_id);
-            $.get("{{ route('ajaxjournals.index') }}" +'/' + record_id +'/edit', function (data) {
+            $.get("{{ route('ajaxjournals.index') }}" + '/' + record_id + '/edit', function (data) {
                 $('#modelHeading').html("Edit Record");
                 $('#saveBtn').val("edit-record");
                 $('#ajaxModel').modal('show');
