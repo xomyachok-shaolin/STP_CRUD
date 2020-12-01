@@ -3,7 +3,7 @@
 <head>
     <title>HOTEL (LARAVEL - CRUD)</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -11,13 +11,14 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="{{ URL::asset('css/main.css') }}">
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
 
-    <div class="header">
+    <div class="row-header">
 
         <img src="images/head.png" style="width: 100%;
                                           height: auto;
@@ -30,9 +31,10 @@
 
     </div>
 
-    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)" id="createNewRecord"> Create New Record</a>
+    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)"
+       id="createNewRecord"> Create New Record</a>
 
-    <table class="table table-bordered data-table">
+    <table class="table table-responsive-sm table-bordered data-table" width="100%">
         <thead>
         <tr>
             <th>ID</th>
@@ -40,7 +42,7 @@
             <th>Client</th>
             <th>Room</th>
             <th>Date export</th>
-            <th width="180px">Action</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -62,7 +64,8 @@
                     <div class="form-group">
                         <label for="date_income" class="col-sm-4 control-label">Date income</label>
                         <div class="col-sm-12">
-                            <input type="date" class="form-control" id="date_income" name="date_income" value="" required>
+                            <input type="date" class="form-control" id="date_income" name="date_income" value=""
+                                   required>
                         </div>
                     </div>
 
@@ -93,7 +96,8 @@
                     <div class="form-group">
                         <label for="date_export" class="col-sm-4 control-label">Date export</label>
                         <div class="col-sm-12">
-                            <input type="date" class="form-control" id="date_export" name="date_export" placeholder="Enter date export" value="" maxlength="50">
+                            <input type="date" class="form-control" id="date_export" name="date_export"
+                                   placeholder="Enter date export" value="" maxlength="50">
                         </div>
                     </div>
 
@@ -111,6 +115,7 @@
 </body>
 
 <script type="text/javascript">
+
     $(function () {
 
         $.ajaxSetup({
@@ -147,7 +152,7 @@
             var record_id = $(this).data('id');
             console.log($(this));
             console.log(record_id);
-            $.get("{{ route('ajaxjournals.index') }}" +'/' + record_id +'/edit', function (data) {
+            $.get("{{ route('ajaxjournals.index') }}" + '/' + record_id + '/edit', function (data) {
                 $('#modelHeading').html("Edit Record");
                 $('#saveBtn').val("edit-record");
                 $('#ajaxModel').modal('show');

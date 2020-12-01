@@ -3,7 +3,7 @@
 <head>
     <title>HOTEL (LARAVEL - CRUD)</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -11,13 +11,14 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="{{ URL::asset('css/main.css') }}">
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
 
-    <div class="header">
+    <div class="row-header">
 
         <img src="images/head.png" style="width: 100%;
                                           height: auto;
@@ -30,9 +31,10 @@
 
     </div>
 
-    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)" id="createNewClient"> Create New Client</a>
+    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)"
+       id="createNewClient"> Create New Client</a>
 
-    <table class="table table-bordered data-table">
+    <table class="table table-responsive-sm table-bordered data-table" width="100%">
         <thead>
         <tr>
             <th>ID</th>
@@ -61,35 +63,40 @@
                     <div class="form-group">
                         <label for="surname" class="col-sm-2 control-label">Surname</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="surname" name="surname" placeholder="Enter Surname" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="surname" name="surname"
+                                   placeholder="Enter Surname" value="" maxlength="50" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name"
+                                   value="" maxlength="50" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="lastname" class="col-sm-2 control-label">Lastname</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter Lastname" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="lastname" name="lastname"
+                                   placeholder="Enter Lastname" value="" maxlength="50" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="mail" class="col-sm-2 control-label">Mail</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="mail" name="mail" placeholder="Enter Mail" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="mail" name="mail" placeholder="Enter Mail"
+                                   value="" maxlength="50" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Comment</label>
                         <div class="col-sm-12">
-                            <textarea id="comment" name="comment" required="" placeholder="Enter Comment" class="form-control"></textarea>
+                            <textarea id="comment" name="comment" required="" placeholder="Enter Comment"
+                                      class="form-control"></textarea>
                         </div>
                     </div>
 
@@ -139,7 +146,7 @@
 
         $('body').on('click', '.editClient', function () {
             var client_id = $(this).data('id');
-            $.get("{{ route('ajaxclients.index') }}" +'/' + client_id +'/edit', function (data) {
+            $.get("{{ route('ajaxclients.index') }}" + '/' + client_id + '/edit', function (data) {
                 $('#modelHeading').html("Edit Client");
                 $('#saveBtn').val("edit-client");
                 $('#ajaxModel').modal('show');

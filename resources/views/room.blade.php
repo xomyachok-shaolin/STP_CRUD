@@ -3,7 +3,7 @@
 <head>
     <title>HOTEL (LARAVEL - CRUD)</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -11,13 +11,14 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="{{ URL::asset('css/main.css') }}">
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
 
-    <div class="header">
+    <div class="row-header">
 
         <img src="images/head.png" style="width: 100%;
                                           height: auto;
@@ -30,9 +31,9 @@
 
     </div>
 
-    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)" id="createNewRoom"> Create New Room</a>
-
-    <table class="table table-bordered data-table">
+    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)" id="createNewRoom">
+        Create New Room</a>
+    <table class="table table-responsive-sm table-bordered data-table" width="100%">
         <thead>
         <tr>
             <th>№</th>
@@ -61,21 +62,24 @@
                     <div class="form-group">
                         <label for="number" class="col-sm-4 control-label">№ Room</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="number" name="number" placeholder="Enter № Room" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="number" name="number"
+                                   placeholder="Enter № Room" value="" maxlength="50" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="capacity" class="col-sm-4 control-label">Capacity</label>
                         <div class="col-sm-12">
-                            <input type="number" value="1" min="1" max="16" class="form-control" id="capacity" name="capacity" placeholder="Enter capacity" value="" maxlength="50" required="">
+                            <input type="number" value="1" min="1" max="16" class="form-control" id="capacity"
+                                   name="capacity" placeholder="Enter capacity" value="" maxlength="50" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="comfortable" class="col-sm-4 control-label">Comfortable</label>
                         <div class="col-sm-12">
-                            <select class="browser-default custom-select" id="comfortable" name="comfortable" value="" maxlength="50" required="">
+                            <select class="browser-default custom-select" id="comfortable" name="comfortable"
+                                    value="" maxlength="50" required="">
                                 <option selected>Enter comfortable</option>
                                 <option value="Обычный">Обычный</option>
                                 <option value="Полулюкс">Полулюкс</option>
@@ -88,7 +92,8 @@
                     <div class="form-group">
                         <label for="price" class="col-sm-4 control-label">Price</label>
                         <div class="col-sm-12">
-                            <input type="number" value="10" min="10" max="16000" class="form-control" id="price" name="price" placeholder="Enter price" value="" maxlength="50" required="">
+                            <input type="number" value="10" min="10" max="16000" class="form-control" id="price"
+                                   name="price" placeholder="Enter price" value="" maxlength="50" required="">
                         </div>
                     </div>
 
@@ -136,7 +141,7 @@
 
         $('body').on('click', '.editRoom', function () {
             var room_id = $(this).data('id');
-            $.get("{{ route('ajaxrooms.index') }}" +'/' + room_id +'/edit', function (data) {
+            $.get("{{ route('ajaxrooms.index') }}" + '/' + room_id + '/edit', function (data) {
                 $('#modelHeading').html("Edit Room");
                 $('#saveBtn').val("edit-room");
                 $('#ajaxModel').modal('show');
