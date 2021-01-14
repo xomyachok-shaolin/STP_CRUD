@@ -134,7 +134,17 @@
                 {data: 'mail'},
                 {data: 'number'},
                 {data: 'date_export'},
-                {data: 'action', orderable: false, searchable: false}
+                {
+                    data: 'action', orderable: false, searchable: false, className: 'text-right',
+                    "render": function (data, type, row) {
+
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' + row.id + '" data-original-title="Edit" class="edit btn btn-primary btn-sm editRecord">Edit</a>';
+
+                        $btn = $btn + ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' + row.id + '" data-original-title="Delete" class="btn btn-danger btn-sm deleteRecord">Delete</a>';
+
+                        return $btn;
+                    }
+                }
             ]
         });
 

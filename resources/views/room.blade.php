@@ -127,7 +127,17 @@
                 {data: 'capacity'},
                 {data: 'comfortable'},
                 {data: 'price'},
-                {data: 'action', orderable: false, searchable: false},
+                {
+                    data: 'action', orderable: false, searchable: false, className: 'text-right',
+                    "render": function (data, type, row) {
+
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' + row.id + '" data-original-title="Edit" class="edit btn btn-primary btn-sm editRoom">Edit</a>';
+
+                        $btn = $btn + ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' + row.id + '" data-original-title="Delete" class="btn btn-danger btn-sm deleteRoom">Delete</a>';
+
+                        return $btn;
+                    }
+                }
             ]
         });
 

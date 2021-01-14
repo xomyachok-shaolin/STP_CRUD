@@ -20,19 +20,11 @@ class RoomController extends Controller
 
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
-
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editRoom">Edit</a>';
-
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteRoom">Delete</a>';
-
-                    return $btn;
-                })
-                ->rawColumns(['action'])
+                ->addColumn('action', $data)
                 ->make(true);
         }
 
-        return view('room',compact('rooms'));
+        return view('room', compact('rooms'));
     }
 
     /**
@@ -45,7 +37,7 @@ class RoomController extends Controller
             ['number' => $request->number, 'capacity' => $request->capacity,
                 'comfortable' => $request->comfortable, 'price' => $request->price]);
 
-        return response()->json(['success'=>'Room saved successfully.']);
+        return response()->json(['success' => 'Room saved successfully.']);
     }
 
     /**
@@ -63,6 +55,6 @@ class RoomController extends Controller
     {
         Room::find($id)->delete();
 
-        return response()->json(['success'=>'Room deleted successfully.']);
+        return response()->json(['success' => 'Room deleted successfully.']);
     }
 }

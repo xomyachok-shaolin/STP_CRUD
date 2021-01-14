@@ -17,31 +17,21 @@ class JournalController extends Controller
 
         $rooms = Room::latest()->get();
 
-        $journals = Journal::join('clients', 'journals.client_id','=', 'clients.id')->
-        join('rooms', 'journals.room_id','=', 'rooms.id')->select('journals.*','clients.mail', 'rooms.number')->get();
-
-        // print_r($journals);
+        $journals = Journal::join('clients', 'journals.client_id', '=', 'clients.id')->
+        join('rooms', 'journals.room_id', '=', 'rooms.id')->select('journals.*', 'clients.mail', 'rooms.number')->get();
 
         if ($request->ajax()) {
 
-            $data = Journal::join('clients', 'journals.client_id','=', 'clients.id')->
-            join('rooms', 'journals.room_id','=', 'rooms.id')->select('journals.*','clients.mail', 'rooms.number')->get();
+            $data = Journal::join('clients', 'journals.client_id', '=', 'clients.id')->
+            join('rooms', 'journals.room_id', '=', 'rooms.id')->select('journals.*', 'clients.mail', 'rooms.number')->get();
 
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
-
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editRecord">Edit</a>';
-
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteRecord">Delete</a>';
-
-                    return $btn;
-                })
-                ->rawColumns(['action'])
+                ->addColumn('action', $data)
                 ->make(true);
         }
 
-        return view('journal',compact('clients', 'rooms', 'journals'));
+        return view('journal', compact('clients', 'rooms', 'journals'));
     }
 
     /**
@@ -54,7 +44,7 @@ class JournalController extends Controller
             ['date_income' => $request->date_income, 'client_id' => $request->client_id,
                 'room_id' => $request->room_id, 'date_export' => $request->date_export]);
 
-        return response()->json(['success'=>'Record saved successfully.']);
+        return response()->json(['success' => 'Record saved successfully.']);
     }
 
     /**
@@ -72,6 +62,6 @@ class JournalController extends Controller
     {
         Journal::find($id)->delete();
 
-        return response()->json(['success'=>'Record deleted successfully.']);
+        return response()->json(['success' => 'Record deleted successfully.']);
     }
 }

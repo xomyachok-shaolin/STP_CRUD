@@ -20,19 +20,11 @@ class ClientController extends Controller
 
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
-
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editClient">Edit</a>';
-
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteClient">Delete</a>';
-
-                    return $btn;
-                })
-                ->rawColumns(['action'])
+                ->addColumn('action', $data)
                 ->make(true);
         }
 
-        return view('client',compact('clients'));
+        return view('client', compact('clients'));
     }
 
     /**
@@ -46,7 +38,7 @@ class ClientController extends Controller
                 'lastname' => $request->lastname, 'mail' => $request->mail,
                 'comment' => $request->comment]);
 
-        return response()->json(['success'=>'Client saved successfully.']);
+        return response()->json(['success' => 'Client saved successfully.']);
     }
 
     /**
@@ -64,6 +56,6 @@ class ClientController extends Controller
     {
         Client::find($id)->delete();
 
-        return response()->json(['success'=>'Product deleted successfully.']);
+        return response()->json(['success' => 'Product deleted successfully.']);
     }
 }
