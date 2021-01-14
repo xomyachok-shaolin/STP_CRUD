@@ -3,7 +3,7 @@
 <head>
     <title>HOTEL (LARAVEL - CRUD)</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -30,7 +30,8 @@
 
     </div>
 
-    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)" id="createNewClient"> Create New Client</a>
+    <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)"
+       id="createNewClient"> Create New Client</a>
 
     <table class="table table-bordered data-table">
         <thead>
@@ -61,35 +62,40 @@
                     <div class="form-group">
                         <label for="surname" class="col-sm-2 control-label">Surname</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="surname" name="surname" placeholder="Enter Surname" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="surname" name="surname"
+                                   placeholder="Enter Surname" value="" maxlength="50" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name"
+                                   value="" maxlength="50" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="lastname" class="col-sm-2 control-label">Lastname</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter Lastname" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="lastname" name="lastname"
+                                   placeholder="Enter Lastname" value="" maxlength="50" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="mail" class="col-sm-2 control-label">Mail</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="mail" name="mail" placeholder="Enter Mail" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="mail" name="mail" placeholder="Enter Mail"
+                                   value="" maxlength="50" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Comment</label>
                         <div class="col-sm-12">
-                            <textarea id="comment" name="comment" required="" placeholder="Enter Comment" class="form-control"></textarea>
+                            <textarea id="comment" name="comment" required="" placeholder="Enter Comment"
+                                      class="form-control"></textarea>
                         </div>
                     </div>
 
@@ -125,7 +131,17 @@
                 {data: 'lastname'},
                 {data: 'mail'},
                 {data: 'comment'},
-                {data: 'action', orderable: false, searchable: false},
+                {
+                    data: 'action', orderable: false, searchable: false, className: 'text-right',
+                    "render": function (data, type, row) {
+
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' + row.id + '" data-original-title="Edit" class="edit btn btn-primary btn-sm editClient">Edit</a>';
+
+                        $btn = $btn + ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' + row.id + '" data-original-title="Delete" class="btn btn-danger btn-sm deleteClient">Delete</a>';
+
+                        return $btn;
+                    }
+                }
             ]
         });
 
@@ -139,7 +155,7 @@
 
         $('body').on('click', '.editClient', function () {
             var client_id = $(this).data('id');
-            $.get("{{ route('ajaxclients.index') }}" +'/' + client_id +'/edit', function (data) {
+            $.get("{{ route('ajaxclients.index') }}" + '/' + client_id + '/edit', function (data) {
                 $('#modelHeading').html("Edit Client");
                 $('#saveBtn').val("edit-client");
                 $('#ajaxModel').modal('show');
