@@ -11,13 +11,14 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="{{ URL::asset('css/main.css') }}">
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
 
-    <div class="header">
+    <div class="row-header">
 
         <img src="images/head.png" style="width: 100%;
                                           height: auto;
@@ -33,7 +34,7 @@
     <a class="btn btn-success" style="float: right; margin-bottom: 15px;" href="javascript:void(0)"
        id="createNewClient"> Create New Client</a>
 
-    <table class="table table-bordered data-table">
+    <table class="table table-responsive-sm table-bordered data-table" width="100%">
         <thead>
         <tr>
             <th>ID</th>
